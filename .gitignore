@@ -1,0 +1,15 @@
+static/
+
+migrations/
+
+movie/
+
+lib/
+
+scripts/
+
+media/
+
+pyvenv.cfg
+
+db.sqlite3

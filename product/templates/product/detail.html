@@ -1,0 +1,35 @@
+{% extends 'product/home.html' %}
+
+{% block title %}
+    فیلم
+{% endblock %}
+
+
+{% block content %}
+    <div class="container-fluid col-12 content">
+        <div class="col-lg-6 float-start bodycontent">
+            <div class="card m-1">
+                <b class="text-center">{{ movies.name }}</b>
+                <img src="{{ movies.poster.url }}" class="card-img-top" alt="...">
+                <div class="card-body" style="font-size: 14px;">
+                    <p>اسم فارسی: <span style="font-weight: bold;">{{ movies.persian_name }}</span></p>
+                    <p>ژانر: 
+                        <span style="font-weight: bold;">
+                        {% for cate in movies.category.all %}
+                        <a class="movie_category_tag_a" href="{% url 'product:category' slug=cate.slug %}">{{ cate.title }}</a>
+                        {% endfor %}
+                        </span></p>
+                    <p>سال: <span style="font-weight: bold;">{{ movies.year }}</span></p>
+                    <p>محصول کشور: 
+                        <span style="font-weight: bold;">
+                        {% for cate in movies.country.all %}
+                        <a class="movie_category_tag_a" href="{% url 'product:country' slug=cate.slug %}">{{ cate.title }}</a>
+                        {% endfor %}
+                        </span></p>
+                    <p>کارگردان: <span style="font-weight: bold;">{{ movies.director }}</span></p>
+                    <p>ستارگان: <span style="font-weight: bold;">{{ movies.stars }}</span></p>
+                    <p>خلاصه داستان: <span style="font-weight: bold;">{{ movies.MovieـSummary }}</span></p>
+                </div>
+            </div>
+    </div>
+{% endblock %}

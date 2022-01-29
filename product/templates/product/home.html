@@ -1,0 +1,114 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'product/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'product/css/fontawesome.min.css' %}">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'home/css/icon.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <title>{% block title %}خانه{% endblock %}</title>
+</head>
+<body>
+  <div class="topnav" id="myTopnav">
+    <div class="container">
+      <a href="{% url 'product:home' %}" class="active">خانه</a>
+      <a href="{% url 'product:foreign' %}">خارجی</a>
+      <a href="{% url 'product:iranian' %}">ایرانی</a>
+      <a href="{% url 'product:animation' %}">انیمیشن</a>
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="bi bi-list"></i>
+      </a>
+    </div>
+  </div>
+      
+    <div class="container"> 
+    <div class="content">
+      <div class="leftsid mt-1">
+        <div class="category1">
+          <i class="bi bi-tags-fill"></i> فیلم ها براساس ژانر
+          <hr>
+          <div class="category">
+          <ul>
+              {% for cate in category %}
+                <li><a href="{% url 'product:category' slug=cate.slug %}">
+                  <i class="bi bi-caret-left"></i>
+                  {{ cate.title }}
+                </a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <div class="category2">
+          <i class="bi bi-tags-fill"></i> فیلم ها براساس کشور تولید کننده
+          <hr>
+          <div class="country">
+          <ul>
+              {% for country in countres %}
+                <li><a href="{% url 'product:country' slug=country.slug %}">
+                  <i class="bi bi-caret-left"></i>
+                  {{ country.title }}
+                </a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+{% block content %}      
+        <div class="bodycontent">
+            {% for movie in movies %}
+                <div class="card m-1">
+                    <b class="text-center">{{ movie.name }}</b>
+                    <img src="{{ movie.poster.url }}" class="card-img-top" alt="...">
+                    <div class="card-body" style="font-size: 14px;">
+                        <p>اسم فارسی: <span style="font-weight: bold;">{{ movie.persian_name }}</span></p>
+                        <p>ژانر: 
+                          <span style="font-weight: bold;">
+                          {% for cate in movie.category.all %}
+                          <a class="movie_category_tag_a" href="{% url 'product:category' slug=cate.slug %}">{{ cate.title }}</a>
+                          {% endfor %}
+                          </span>
+                        </p>
+                        <p>امتیاز: <span style="font-weight: bold;">{{ movie.IMDB_score }}</span></p>
+                        <p>سال: <span style="font-weight: bold;">{{ movie.year }}</span></p>
+                        <p>محصول کشور: 
+                          <span style="font-weight: bold;">
+                          {% for cate in movie.country.all %}
+                          <a class="movie_category_tag_a" href="{% url 'product:country' slug=cate.slug %}">{{ cate.title }}</a>
+                          {% endfor %}
+                          </span>
+                        </p>
+                        <p>کارگردان: <span style="font-weight: bold;">{{ movie.director }}</span></p>
+                        <p>ستارگان: <span style="font-weight: bold;">{{ movie.stars }}</span></p>
+                        <p>خلاصه داستان: <span style="font-weight: bold;">{{ movie.MovieـSummary }}</span></p>
+                        <a class="details_tag_a" href="{% url 'product:detail' slug=movie.slug %}">ادامه مطلب</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+{% endblock %}          
+        <div class="rightsid mt-1">
+          محل تبلیغات
+        </div>      
+    </div>
+      
+  </div> 
+
+    <footer>
+      <div class="footer">
+        وب سایت دانلود فیلم
+      </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    <script src="{% static 'product/js/main.js' %}"></script>
+  </body>
+</html>
