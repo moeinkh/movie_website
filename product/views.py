@@ -1,10 +1,16 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Category, Movie, Country
+from django.db.models import Q
 
 # Create your views here.
 def home(request):
+    search = request.GET.get('search')
+    if search:
+        movies = Movie.objects.filter(Q(persian_name__contains=search) | Q(name__contains=search))
+    else:
+        movies = Movie.objects.all().order_by('-id')    
     context = {
-        'movies': Movie.objects.all().order_by('-id'),
+        'movies': movies,
         'category': Category.objects.all(),
         'countres': Country.objects.all(),
     }

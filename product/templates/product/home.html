@@ -16,17 +16,27 @@
     <title>{% block title %}خانه{% endblock %}</title>
 </head>
 <body>
-  <div class="topnav" id="myTopnav">
-    <div class="container">
-      <a href="{% url 'product:home' %}" class="active">خانه</a>
-      <a href="{% url 'product:foreign' %}">خارجی</a>
-      <a href="{% url 'product:iranian' %}">ایرانی</a>
-      <a href="{% url 'product:animation' %}">انیمیشن</a>
-      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-        <i class="bi bi-list"></i>
-      </a>
+  <header>
+    <div class="topnav" id="myTopnav">
+      <div class="container">
+        <div class="input_search">
+          <form method="get" action="">
+            <input type="text" name="search" placeholder="اسم فیلم یا سریال...">
+            <button type="submit">جستجو</button>
+          </form>
+        </div>
+        <nav>
+          <a href="{% url 'product:home' %}" class="active">خانه</a>
+          <a href="{% url 'product:foreign' %}">خارجی</a>
+          <a href="{% url 'product:iranian' %}">ایرانی</a>
+          <a href="{% url 'product:animation' %}">انیمیشن</a>
+          <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="bi bi-list"></i>
+          </a>
+        </nav>
+      </div>
     </div>
-  </div>
+  </header>
       
     <div class="container"> 
     <div class="content">
