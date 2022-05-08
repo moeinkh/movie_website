@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Category, Movie, Country
+from .models import Category, Movie, Country, Poster
 from django.db.models import Q
 
 # Create your views here.
@@ -13,6 +13,7 @@ def home(request):
         'movies': movies,
         'category': Category.objects.all(),
         'countres': Country.objects.all(),
+        'posters': Poster.objects.all(),
     }
 
     return render(request, 'product/home.html', context)

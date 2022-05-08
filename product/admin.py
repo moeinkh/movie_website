@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Movie, Country
+from .models import Category, Movie, Country, Poster
 # Register your models here.
 class MovieAdmin(admin.ModelAdmin):
     list_display = [
@@ -20,4 +20,5 @@ class MovieAdmin(admin.ModelAdmin):
 
 admin.site.register(Country)
 admin.site.register(Category)
+admin.site.register(Poster)
 admin.site.register(Movie, MovieAdmin)

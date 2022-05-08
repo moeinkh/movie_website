@@ -1,4 +1,4 @@
-{% extends 'product/home.html' %}
+{% extends 'product/index.html' %}
 
 {% block title %}
     فیلم
@@ -10,7 +10,7 @@
         <div class="col-lg-6 float-start bodycontent">
             <div class="card m-1">
                 <b class="text-center">{{ movies.name }}</b>
-                <img src="{{ movies.poster.url }}" class="card-img-top" alt="...">
+                <img src="{{ movies.image.url }}" class="card-img-top" alt="...">
                 <div class="card-body" style="font-size: 14px;">
                     <p>اسم فارسی: <span style="font-weight: bold;">{{ movies.persian_name }}</span></p>
                     <p>ژانر: 

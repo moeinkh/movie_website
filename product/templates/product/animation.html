@@ -1,4 +1,4 @@
-{% extends 'product/home.html' %}
+{% extends 'product/index.html' %}
 
 {% block title %}
     دانلود فیلم
@@ -11,7 +11,7 @@
             {% for movie in animation %}
             <div class="card m-1">
                 <b class="text-center">{{ movie.name }}</b>
-                <img src="{{ movie.poster.url }}" class="card-img-top" alt="...">
+                <img src="{{ movie.image.url }}" class="card-img-top" alt="...">
                 <div class="card-body" style="font-size: 14px;">
                     <p>اسم فارسی: <span style="font-weight: bold;">{{ movie.persian_name }}</span></p>
                     <p>ژانر: 

@@ -1,81 +1,40 @@
+{% extends "product/index.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'product/css/main.css' %}">
-    <link rel="stylesheet" href="{% static 'product/css/fontawesome.min.css' %}">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'home/css/icon.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-    <title>{% block title %}خانه{% endblock %}</title>
-</head>
-<body>
-  <header>
-    <div class="topnav" id="myTopnav">
-      <div class="container">
-        <div class="input_search">
-          <form method="get" action="">
-            <input type="text" name="search" placeholder="اسم فیلم یا سریال...">
-            <button type="submit">جستجو</button>
-          </form>
-        </div>
-        <nav>
-          <a href="{% url 'product:home' %}" class="active">خانه</a>
-          <a href="{% url 'product:foreign' %}">خارجی</a>
-          <a href="{% url 'product:iranian' %}">ایرانی</a>
-          <a href="{% url 'product:animation' %}">انیمیشن</a>
-          <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-            <i class="bi bi-list"></i>
-          </a>
-        </nav>
+{% block slider %}
+<div class="container"> 
+    <div id="carouselExampleIndicators" class="carousel slide my-2 carousel-fade" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        {% for poster in posters %}
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}" class="active" aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+        {% endfor %}
       </div>
+    <div class="carousel-inner">
+      {% for poster in posters %}
+        <div class="carousel-item {% if forloop.counter0 == 0 %} active {% endif %}">
+          <a href="{% url 'product:detail' slug=poster.movie.slug %}"><img src="{{ poster.slide.url }}" style="height: 400px;" class="d-block w-100 slider" alt="{{ poster.alt }}"></a>
+        </div>
+      {% endfor %}
     </div>
-  </header>
-      
-    <div class="container"> 
-    <div class="content">
-      <div class="leftsid mt-1">
-        <div class="category1">
-          <i class="bi bi-tags-fill"></i> فیلم ها براساس ژانر
-          <hr>
-          <div class="category">
-          <ul>
-              {% for cate in category %}
-                <li><a href="{% url 'product:category' slug=cate.slug %}">
-                  <i class="bi bi-caret-left"></i>
-                  {{ cate.title }}
-                </a></li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-        <div class="category2">
-          <i class="bi bi-tags-fill"></i> فیلم ها براساس کشور تولید کننده
-          <hr>
-          <div class="country">
-          <ul>
-              {% for country in countres %}
-                <li><a href="{% url 'product:country' slug=country.slug %}">
-                  <i class="bi bi-caret-left"></i>
-                  {{ country.title }}
-                </a></li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-      </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+    </div>
+</div>
+{% endblock slider %}
+    
 {% block content %}      
         <div class="bodycontent">
             {% for movie in movies %}
-                <div class="card m-1">
+                <div class="card m-2 mb-3">
                     <b class="text-center">{{ movie.name }}</b>
-                    <img src="{{ movie.poster.url }}" class="card-img-top" alt="...">
+                    <img src="{{ movie.image.url }}" class="card-img-top" alt="...">
                     <div class="card-body" style="font-size: 14px;">
                         <p>اسم فارسی: <span style="font-weight: bold;">{{ movie.persian_name }}</span></p>
                         <p>ژانر: 

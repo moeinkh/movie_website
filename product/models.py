@@ -35,7 +35,7 @@ class Movie(models.Model):
     category = models.ManyToManyField(Category, related_name='movies', verbose_name='دسته بندی')
     name = models.CharField('اسم', max_length=100)
     slug = models.SlugField('اسلاگ', max_length=100)
-    poster = models.ImageField('پوستر فیلم', upload_to='poster/')
+    image = models.ImageField('پوستر فیلم', upload_to='poster/')
     persian_name = models.CharField('اسم فارسی', max_length=100)
     year = models.IntegerField('سال تولید')
     country = models.ManyToManyField(Country, verbose_name='کشور تولید کننده')
@@ -65,3 +65,28 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.name
+
+class Poster(models.Model):
+
+    class Meta:
+        verbose_name = 'اسلایدر'
+        verbose_name_plural = 'اسلایدر ها'
+
+    movie = models.ForeignKey(
+                                Movie,
+                                on_delete=models.CASCADE, 
+                                verbose_name='فیلم',
+                                )
+
+    slide = models.ImageField(
+                                'پوستر', 
+                                upload_to='poster/sliders',
+                                )
+
+    alt = models.CharField(
+                            'اسم تصویر',
+                            max_length=128,
+                            ) 
+
+    def __str__(self):
+        return self.alt
