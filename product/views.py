@@ -8,7 +8,12 @@ def home(request):
     if search:
         movies = Movie.objects.filter(Q(persian_name__contains=search) | Q(name__contains=search))
     else:
-        movies = Movie.objects.all().order_by('-id')    
+        movies = Movie.objects.all().order_by('-id')
+
+    nodes = Category.objects.filter(title='فیلم')
+    for node in nodes:
+        node.get_root()  
+        print(node.get_root())          
     context = {
         'movies': movies,
         'category': Category.objects.all(),
@@ -42,21 +47,21 @@ def country(request, slug):
     }    
     return render(request, 'product/country.html', context)
 
-def iranian(request):
+def film(request):
     context = {
-        'iranian': Movie.objects.filter(making=1).order_by('-id'),
+        'film': Movie.objects.filter(category=15).order_by('-id'),
         'category': Category.objects.all(),
         'countres': Country.objects.all(),
     }    
-    return render(request, 'product/iranian.html', context)
+    return render(request, 'product/film.html', context)
 
-def foreign(request):
+def series(request):
     context = {
-        'foreign': Movie.objects.filter(making=2).order_by('-id'),
+        'series': Movie.objects.filter(category=16).order_by('-id'),
         'category': Category.objects.all(),
         'countres': Country.objects.all(),
     }    
-    return render(request, 'product/foreign.html', context)    
+    return render(request, 'product/series.html', context)    
 
 def animation(request):
     context = {

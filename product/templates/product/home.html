@@ -13,7 +13,7 @@
     <div class="carousel-inner">
       {% for poster in posters %}
         <div class="carousel-item {% if forloop.counter0 == 0 %} active {% endif %}">
-          <a href="{% url 'product:detail' slug=poster.movie.slug %}"><img src="{{ poster.slide.url }}" style="height: 400px;" class="d-block w-100 slider" alt="{{ poster.alt }}"></a>
+          <a href="{% url 'product:detail' slug=poster.movie.slug %}"><img src="{{ poster.slide.url }}" style="height: 400px; border-radius: 5px;" class="d-block w-100 slider" alt="{{ poster.alt }}"></a>
         </div>
       {% endfor %}
     </div>
@@ -40,7 +40,7 @@
                         <p>ژانر: 
                           <span style="font-weight: bold;">
                           {% for cate in movie.category.all %}
-                          <a class="movie_category_tag_a" href="{% url 'product:category' slug=cate.slug %}">{{ cate.title }}</a>
+                            <a class="movie_category_tag_a" href="{% url 'product:category' slug=cate.slug %}">{{ cate.title }}</a>
                           {% endfor %}
                           </span>
                         </p>

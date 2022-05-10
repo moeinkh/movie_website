@@ -5,10 +5,10 @@ app_name = 'product'
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('details/<slug:slug>/', views.detail, name='detail'),
-    path('category/<slug:slug>/', views.category, name='category'),
-    path('country/<slug:slug>/', views.country, name='country'),
-    path('iranian/', views.iranian, name='iranian'),
-    path('foreign/', views.foreign, name='foreign'),
+    path('details/<str:slug>/', views.detail, name='detail'),
+    path('category/<str:slug>/', views.category, name='category'),
+    path('country/<str:slug>/', views.country, name='country'),
+    path('film/', views.film, name='film'),
+    path('series/', views.series, name='series'),
     path('animation/', views.animation, name='animation'),
 ]
