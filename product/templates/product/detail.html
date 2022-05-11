@@ -27,7 +27,13 @@
                         {% endfor %}
                         </span></p>
                     <p>کارگردان: <span style="font-weight: bold;">{{ movies.director }}</span></p>
-                    <p>ستارگان: <span style="font-weight: bold;">{{ movies.stars }}</span></p>
+                    <p>ستارگان: 
+                      <span style="font-weight: bold;">
+                        {% for artist in movie.artists.all %}
+                          {{ artist.name }},
+                        {% endfor %}
+                      </span>
+                    </p>
                     <p>خلاصه داستان: <span style="font-weight: bold;">{{ movies.MovieـSummary }}</span></p>
                 </div>
             </div>

@@ -16,19 +16,39 @@
                     <p>اسم فارسی: <span style="font-weight: bold;">{{ movie.persian_name }}</span></p>
                     <p>ژانر: 
                         <span style="font-weight: bold;">
-                        {% for cate in movie.category.all %}
-                        <a class="movie_category_tag_a" href="{% url 'product:category' slug=cate.slug %}">{{ cate.title }}</a>
-                        {% endfor %}
-                        </span></p>
+                            {% if movie.type_movie == 1 %}
+                                {% for cate in movie.category.all %}
+                                    <a class="movie_category_tag_a" href="{% url 'product:category_cinematic' slug=cate.slug %}">{{ cate.title }}</a>
+                                {% endfor %}
+                            {% else %} 
+                                {% for cate in movie.category.all %}
+                                    <a class="movie_category_tag_a" href="{% url 'product:category_serial' slug=cate.slug %}">{{ cate.title }}</a>
+                                {% endfor %}
+                            {% endif %}
+                        </span>
+                    </p>
                     <p>سال: <span style="font-weight: bold;">{{ movie.year }}</span></p>
                     <p>محصول کشور: 
                         <span style="font-weight: bold;">
-                        {% for cate in movie.country.all %}
-                        <a class="movie_category_tag_a" href="{% url 'product:country' slug=cate.slug %}">{{ cate.title }}</a>
-                        {% endfor %}
-                        </span></p>
+                            {% if movie.type_movie == 1 %}
+                                {% for cate in movie.country.all %}
+                                    <a class="movie_category_tag_a" href="{% url 'product:country_cinematic' slug=cate.slug %}">{{ cate.title }}</a>
+                                {% endfor %}
+                            {% else %}
+                                {% for cate in movie.country.all %}
+                                    <a class="movie_category_tag_a" href="{% url 'product:country_serial' slug=cate.slug %}">{{ cate.title }}</a>
+                                {% endfor %}
+                            {% endif %}
+                        </span>
+                    </p>
                     <p>کارگردان: <span style="font-weight: bold;">{{ movie.director }}</span></p>
-                    <p>ستارگان: <span style="font-weight: bold;">{{ movie.stars }}</span></p>
+                    <p>ستارگان: 
+                        <span style="font-weight: bold;">
+                          {% for artist in movie.artists.all %}
+                            {{ artist.name }},
+                          {% endfor %}
+                        </span>
+                      </p>
                     <p>خلاصه داستان: <span style="font-weight: bold;">{{ movie.MovieـSummary }}</span></p>
                     <a class="details_tag_a" href="{% url 'product:detail' slug=movie.slug %}">ادامه مطلب</a>
                 </div>
