@@ -32,7 +32,7 @@
 {% block content %}      
         <div class="bodycontent">
             {% for movie in movies %}
-                <div class="card m-2 mb-3">
+                <div class="card">
                     <b class="text-center">{{ movie.name }}</b>
                     <img src="{{ movie.image.url }}" class="card-img-top" alt="...">
                     <div class="card-body" style="font-size: 14px;">
@@ -78,6 +78,31 @@
                     </div>
                 </div>
             {% endfor %}
+            <div class="pagination">
+              {% if movies.has_previous %}
+                <a href="?page={{ movies.previous_page_number }}"><i class="fa fa-long-arrow-right"></i></a>
+                {% if movies.number > 3 %}
+                    <a href="?page=1">1</a>
+                {% endif %}
+              {% endif %}
+    
+              {% for num in movies.paginator.page_range %}
+                  {% if movies.number == num %}
+                      <span class="current">
+                          <a href="" style="background-color: #7fad39; color: #fff;">{{ movies.number }}</a>
+                      </span>
+                  {% elif num > movies.number|add:'-3' and num < movies.number|add:'3' %}
+                      <a href="?page={{num}}">{{num}}</a>
+                  {% endif %}
+              {% endfor %}
+    
+              {% if movies.has_next %}
+                {% if movies.number < 3 %}
+                  <a href="?page={{ movies.paginator.num_pages }}">{{ movies.paginator.num_pages }}</a>
+                {% endif %}
+                <a href="?page={{ movies.next_page_number }}"><i class="fa fa-long-arrow-left"></i></a>
+              {% endif %}
+            </div>
         </div>
 {% endblock %}          
         <div class="rightsid mt-1">
