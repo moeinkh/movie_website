@@ -28,6 +28,58 @@
     </div>
 </div>
 {% endblock slider %}
+
+{% block search_form %}
+  <div class="container search_form">
+    <h3>جستجوی پیشرفته</h3>
+    <form method="get">
+      <div class="row">
+        <div class="col-md-3">
+          <label for="{{ field.id_for_label }}">
+            {{ search_form.country.label }}:
+          </label>
+          <div class="form-control form-control-sm">
+            {{ search_form.country }}
+            {{ search_form.country.errors }}
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="{{ field.id_for_label }}">
+            {{ search_form.category.label }}:
+          </label>
+          <div class="form-control form-control-sm">
+            {{ search_form.category }}
+            {{ search_form.category.errors }}
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="{{ field.id_for_label }}">
+            {{ search_form.artist.label }}:
+          </label>
+          <div class="form-control form-control-sm">
+            {{ search_form.artist }}
+            {{ search_form.artist.errors }}
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="{{ field.id_for_label }}">
+            {{ search_form.director.label }}:
+          </label>
+          <div class="form-control form-control-sm">
+            {{ search_form.director }}
+            {{ search_form.director.errors }}
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-3">
+          <button class="button_search_form" type="submit">جستجو</button>
+        </div>
+      </div>
+    </form>
+  </div>
+{% endblock search_form %}
     
 {% block content %}      
         <div class="bodycontent">
@@ -82,7 +134,7 @@
               {% if movies.has_previous %}
                 <a href="?page={{ movies.previous_page_number }}"><i class="fa fa-long-arrow-right"></i></a>
                 {% if movies.number > 3 %}
-                    <a href="?page=1">1</a>
+                    <a href="?page=1">1</a>. . .
                 {% endif %}
               {% endif %}
     
@@ -98,7 +150,7 @@
     
               {% if movies.has_next %}
                 {% if movies.number < 3 %}
-                  <a href="?page={{ movies.paginator.num_pages }}">{{ movies.paginator.num_pages }}</a>
+                  . . .<a href="?page={{ movies.paginator.num_pages }}">{{ movies.paginator.num_pages }}</a>
                 {% endif %}
                 <a href="?page={{ movies.next_page_number }}"><i class="fa fa-long-arrow-left"></i></a>
               {% endif %}

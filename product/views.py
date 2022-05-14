@@ -2,15 +2,27 @@ from django.shortcuts import render, get_object_or_404
 from .models import Category, Movie, Country, Poster
 from django.db.models import Q
 from django.core.paginator import Paginator
+from .forms import MovieFormSearch
 
 # Create your views here.
 def home(request):
+    search_form = MovieFormSearch(request.GET)
+    movies = Movie.objects.all().order_by('-id')  
     search = request.GET.get('search')
     if search:
         movies = Movie.objects.filter(Q(persian_name__contains=search) | Q(name__contains=search))
-    else:
-        movies = Movie.objects.all().order_by('-id')    
 
+    if search_form.is_valid():
+        if search_form.cleaned_data['category'] is not None:
+            movies = movies.filter(category=search_form.cleaned_data['category'])
+        if search_form.cleaned_data['country'] is not None:
+            movies = movies.filter(country=search_form.cleaned_data['country']) 
+        if search_form.cleaned_data['director'] is not None: 
+            movies = movies.filter(director__contains=search_form.cleaned_data['director'])
+        if search_form.cleaned_data['artist'] is not None:
+            movies = movies.filter(artists__name__contains=search_form.cleaned_data['artist'])
+        print(movies)       
+    # start pagination config
     paginator = Paginator(movies, 2)
     page_number = request.GET.get('page')
     try:
@@ -21,12 +33,14 @@ def home(request):
     except EmptyPage:
         # if page is empty then return last page
         page_obj = paginator.page(p.num_pages)
-    # end pagination config        
+    # end pagination config 
+
     context = {
         'movies': page_obj,
         'category': Category.objects.all(),
         'countres': Country.objects.all(),
         'posters': Poster.objects.all(),
+        'search_form': search_form,
     }
     return render(request, 'product/home.html', context)
 
@@ -52,6 +66,7 @@ def category_cinematic(request, slug):
         # if page is empty then return last page
         page_obj = paginator.page(p.num_pages)
     # end pagination config 
+    
     context={
         'categores': page_obj,
         'category': Category.objects.all(),
@@ -73,6 +88,7 @@ def category_serial(request, slug):
         # if page is empty then return last page
         page_obj = paginator.page(p.num_pages)
     # end pagination config 
+    
     context={
         'categores': page_obj,
         'category': Category.objects.all(),
@@ -94,6 +110,7 @@ def country_cinematic(request, slug):
         # if page is empty then return last page
         page_obj = paginator.page(p.num_pages)
     # end pagination config 
+    
     context = {
         'country': page_obj,
         'category': Category.objects.all(),
@@ -115,6 +132,7 @@ def country_serial(request, slug):
         # if page is empty then return last page
         page_obj = paginator.page(p.num_pages)
     # end pagination config 
+    
     context = {
         'country': page_obj,
         'category': Category.objects.all(),
@@ -136,6 +154,7 @@ def film(request):
         # if page is empty then return last page
         page_obj = paginator.page(p.num_pages)
     # end pagination config 
+    
     context = {
         'film': page_obj,
         'category': Category.objects.all(),
@@ -157,6 +176,7 @@ def series(request):
         # if page is empty then return last page
         page_obj = paginator.page(p.num_pages)
     # end pagination config 
+    
     context = {
         'series': page_obj,
         'category': Category.objects.all(),
@@ -178,6 +198,7 @@ def animation(request):
         # if page is empty then return last page
         page_obj = paginator.page(p.num_pages)
     # end pagination config 
+    
     context = {
         'animation': page_obj,
         'category': Category.objects.all(),
