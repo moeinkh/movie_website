@@ -19,9 +19,10 @@ def home(request):
             movies = movies.filter(country=search_form.cleaned_data['country']) 
         if search_form.cleaned_data['director'] is not None: 
             movies = movies.filter(director__contains=search_form.cleaned_data['director'])
+        if search_form.cleaned_data['type_movie'] is not None: 
+            movies = movies.filter(type_movie=search_form.cleaned_data['type_movie'])
         if search_form.cleaned_data['artist'] is not None:
-            movies = movies.filter(artists__name__contains=search_form.cleaned_data['artist'])
-        print(movies)       
+            movies = movies.filter(artists__name__contains=search_form.cleaned_data['artist']).distinct()      
     # start pagination config
     paginator = Paginator(movies, 2)
     page_number = request.GET.get('page')

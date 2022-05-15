@@ -35,29 +35,39 @@
     <form method="get">
       <div class="row">
         <div class="col-md-3">
-          <label for="{{ field.id_for_label }}">
-            {{ search_form.country.label }}:
+          <label for="category">
+            {{ search_form.category.label }}:
           </label>
-          <div class="form-control form-control-sm">
-            {{ search_form.country }}
-            {{ search_form.country.errors }}
+          <div>
+            <select class="form-control form-control-sm" name="category" id="category">
+              <option value=""></option>
+              {% for cate in category %}
+                <option value="{{ cate.id }}">{{ cate.title }}</option>
+              {% endfor %}
+            </select>
+            {{ search_form.category.errors }}
           </div>
         </div>
         <div class="col-md-3">
-          <label for="{{ field.id_for_label }}">
-            {{ search_form.category.label }}:
+          <label for="country">
+            {{ search_form.country.label }}:
           </label>
-          <div class="form-control form-control-sm">
-            {{ search_form.category }}
-            {{ search_form.category.errors }}
+          <div>
+            <select class="form-control form-control-sm" name="country" id="country">
+              <option value=""></option>
+              {% for country in countres %}
+                <option value="{{ country.id }}">{{ country.title }}</option>
+              {% endfor %}
+            </select>
+            {{ search_form.country.errors }}
           </div>
         </div>
         <div class="col-md-3">
           <label for="{{ field.id_for_label }}">
             {{ search_form.artist.label }}:
           </label>
-          <div class="form-control form-control-sm">
-            {{ search_form.artist }}
+          <div>
+            <input class="form-control form-control-sm" type="text" name="artist">
             {{ search_form.artist.errors }}
           </div>
         </div>
@@ -65,10 +75,20 @@
           <label for="{{ field.id_for_label }}">
             {{ search_form.director.label }}:
           </label>
-          <div class="form-control form-control-sm">
-            {{ search_form.director }}
+          <div>
+            <input class="form-control form-control-sm" type="text" name="director">
             {{ search_form.director.errors }}
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label for="type_movie">نوع:</label>
+          <select class="form-control form-control-sm" name="type_movie" id="type_movie">
+            <option value='' selected></option>
+            <option value=1>سینمایی</option>
+            <option value=2>سریال</option>
+          </select>
         </div>
       </div>
       <hr>

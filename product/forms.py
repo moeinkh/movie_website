@@ -6,3 +6,4 @@ class MovieFormSearch(forms.Form):
     category = forms.ModelChoiceField(label='ژانر', queryset=Category.objects.all(), required=False)
     artist = forms.CharField(label='بازیگر', max_length=64, required=False)
     director = forms.CharField(label='کارگردان', max_length=64, required=False)
+    type_movie = forms.IntegerField(label='نوع:', required=False)
