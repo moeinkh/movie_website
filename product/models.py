@@ -201,3 +201,40 @@ class Poster(models.Model):
 
     def __str__(self):
         return self.alt
+
+class Comment(models.Model):
+
+    class Meta:
+        verbose_name = 'نظر'
+        verbose_name_plural = 'نظرات'
+
+    movie = models.ForeignKey(
+                Movie,
+                on_delete=models.CASCADE, 
+                verbose_name='فیلم',
+                )
+    name = models.CharField(
+                'نام و نام خانوادگی', 
+                max_length=128,
+                )
+    email = models.EmailField(
+                'ایمیل',
+                )              
+    text = models.TextField(
+                'متن',
+                )
+    active = models.BooleanField(
+                'فعال؟', 
+                default=True,
+                )  
+    created = models.DateTimeField(
+                'زمان ایجاد', 
+                auto_now_add=True,
+                )
+    updated = models.DateTimeField(
+                'زمان اپدیت', 
+                auto_now=True,
+                )
+
+    def __str__(self):
+        return self.name            

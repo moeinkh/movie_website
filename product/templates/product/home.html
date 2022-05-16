@@ -40,7 +40,7 @@
           </label>
           <div>
             <select class="form-control form-control-sm" name="category" id="category">
-              <option value=""></option>
+              <option value="">......</option>
               {% for cate in category %}
                 <option value="{{ cate.id }}">{{ cate.title }}</option>
               {% endfor %}
@@ -54,7 +54,7 @@
           </label>
           <div>
             <select class="form-control form-control-sm" name="country" id="country">
-              <option value=""></option>
+              <option value="">......</option>
               {% for country in countres %}
                 <option value="{{ country.id }}">{{ country.title }}</option>
               {% endfor %}
@@ -67,7 +67,7 @@
             {{ search_form.artist.label }}:
           </label>
           <div>
-            <input class="form-control form-control-sm" type="text" name="artist">
+            <input class="form-control form-control-sm" type="text" name="artist" placeholder="اسم بازیگر مورد نظر ...">
             {{ search_form.artist.errors }}
           </div>
         </div>
@@ -76,7 +76,7 @@
             {{ search_form.director.label }}:
           </label>
           <div>
-            <input class="form-control form-control-sm" type="text" name="director">
+            <input class="form-control form-control-sm" type="text" name="director" placeholder="اسم کارگردان مورد نظر ...">
             {{ search_form.director.errors }}
           </div>
         </div>
@@ -85,7 +85,7 @@
         <div class="col-md-3">
           <label for="type_movie">نوع:</label>
           <select class="form-control form-control-sm" name="type_movie" id="type_movie">
-            <option value='' selected></option>
+            <option value='' selected>......</option>
             <option value=1>سینمایی</option>
             <option value=2>سریال</option>
           </select>
@@ -161,7 +161,7 @@
               {% for num in movies.paginator.page_range %}
                   {% if movies.number == num %}
                       <span class="current">
-                          <a href="" style="background-color: #7fad39; color: #fff;">{{ movies.number }}</a>
+                          <a href="">{{ movies.number }}</a>
                       </span>
                   {% elif num > movies.number|add:'-3' and num < movies.number|add:'3' %}
                       <a href="?page={{num}}">{{num}}</a>

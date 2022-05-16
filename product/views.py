@@ -1,8 +1,10 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Category, Movie, Country, Poster
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Category, Movie, Country, Poster, Comment
 from django.db.models import Q
 from django.core.paginator import Paginator
-from .forms import MovieFormSearch
+from .forms import MovieFormSearch, CommentForm
+from django.http import HttpResponseRedirect
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
@@ -46,12 +48,29 @@ def home(request):
     return render(request, 'product/home.html', context)
 
 def detail(request, slug):
-    context={ 
-        'movies': get_object_or_404(Movie, slug=slug),
-        'category': Category.objects.all(),
-        'countres': Country.objects.all(),
-    }
-    return render(request, 'product/detail.html', context)
+    movie = get_object_or_404(Movie, slug=slug)
+    url = request.META.get('HTTP_REFERER')
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = Comment()
+            comment.movie = movie
+            comment.name = comment_form.cleaned_data['name']
+            comment.email = comment_form.cleaned_data['email']
+            comment.text = comment_form.cleaned_data['text']
+            comment.save()
+            messages.success(request, 'نظر شما با موفقیت ثبت شد.')
+            return redirect(url)
+    else:
+        comment_form = CommentForm() 
+        context={ 
+            'movies': movie,
+            'category': Category.objects.all(),
+            'countres': Country.objects.all(),
+            'comment_form': comment_form,
+            'comments': Comment.objects.filter(movie=movie, active=True).order_by('-created')
+        }
+        return render(request, 'product/detail.html', context)
 
 def category_cinematic(request, slug):    
     categories = Movie.objects.filter(category__slug=slug, type_movie=1).order_by('-id')

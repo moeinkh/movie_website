@@ -45,5 +45,60 @@
                     <p>خلاصه داستان: <span style="font-weight: bold;">{{ movies.MovieـSummary }}</span></p>
                 </div>
             </div>
-    </div>
+            <div class="comment_form">  
+                <h4>
+                    {% with comments.count as total_comments %}
+                        نظرات ({{ total_comments }})
+                    {% endwith %}
+                </h4> 
+                
+                <div class="form">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row g-3 my-1">
+                            <div class="col">
+                                <label for="name">نام و نام خانوادگی:</label>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="نام و نام خانوادگی" aria-label="name">
+                            </div>
+                            <div class="col">
+                                <label for="email">ایمیل:</label>
+                                <input type="email" name="email" id="email" class="form-control" placeholder="ایمیل" aria-label="email">
+                            </div>
+                        </div>
+                        <div class="row g-3 my-1">
+                            <div class="col">
+                                <label for="text">نظر:</label>
+                                <textarea name="text" id="text" cols="5" rows="10" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="row g-3 my-1">
+                            <div class="col">
+                                <button type="submit" class="button_search_form">ثبت نظر</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="comment_show">
+                {% for comment in comments %}
+                    <div class="comment">
+                        <div>
+                            <span>آقا/خانم:</span>
+                            <span>{{ comment.name }}</span>
+                        </div>
+                        <div>
+                            <p>{{ comment.text|linebreaks }}</p>
+                        </div>
+                        <div class="date">
+                            <span> {{ comment.created }} </span>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>
+                        هنوز نظری درباره ی این‌ فیلم داده نشده است.
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>    
 {% endblock %}

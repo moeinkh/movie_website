@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from mptt.admin import DraggableMPTTAdmin
-from .models import Category, Movie, Country, Poster, Artist
+from .models import Category, Movie, Country, Poster, Artist, Comment
 # Register your models here.
 class MovieAdmin(admin.ModelAdmin):
     list_display = (
@@ -25,6 +25,13 @@ class MovieAdmin(admin.ModelAdmin):
                         )
     prepopulated_fields = {'slug': ('name', )}    
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = (
+                    'name',
+                    'created',
+                    'active',
+                    )
+
 admin.site.register(Country)
 admin.site.register(
     Category,
@@ -32,4 +39,5 @@ admin.site.register(
     )
 admin.site.register(Poster)
 admin.site.register(Artist)
+admin.site.register(Comment, CommentAdmin)
 admin.site.register(Movie, MovieAdmin)
